@@ -2,16 +2,16 @@
 
 one:
   data: 2016-12-06
-  ora: 2016-12-06 11:08:15
+  ora: 2016-12-06 14:15:06
   partenza: MyString
   destinazione: MyString
-  durata: 2016-12-06 11:08:15
+  durata: 2016-12-06 14:15:06
   utref: MyString
 
 two:
   data: 2016-12-06
-  ora: 2016-12-06 11:08:15
+  ora: 2016-12-06 14:15:06
   partenza: MyString
   destinazione: MyString
-  durata: 2016-12-06 11:08:15
+  durata: 2016-12-06 14:15:06
   utref: MyString

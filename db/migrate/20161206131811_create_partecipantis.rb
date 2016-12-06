@@ -1,6 +1,6 @@
-class CreatePartecipantes < ActiveRecord::Migration
+class CreatePartecipantis < ActiveRecord::Migration
   def change
-    create_table :partecipantes do |t|
+    create_table :partecipantis do |t|
       t.string :percorso
       t.string :utente
 

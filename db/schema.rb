@@ -11,9 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161206101248) do
+ActiveRecord::Schema.define(version: 20161206131811) do
 
-  create_table "partecipantes", force: :cascade do |t|
+  create_table "partecipantis", force: :cascade do |t|
     t.string   "percorso"
     t.string   "utente"
     t.datetime "created_at", null: false
