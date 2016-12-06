@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Utentes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Età</th>
+      <th>Sesso</th>
+      <th>Idg</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @utentes.each do |utente| %>
+      <tr>
+        <td><%= utente.nome %></td>
+        <td><%= utente.email %></td>
+        <td><%= utente.età %></td>
+        <td><%= utente.sesso %></td>
+        <td><%= utente.idg %></td>
+        <td><%= link_to 'Show', utente %></td>
+        <td><%= link_to 'Edit', edit_utente_path(utente) %></td>
+        <td><%= link_to 'Destroy', utente, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Utente', new_utente_path %>

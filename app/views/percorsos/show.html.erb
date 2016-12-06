@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Data:</strong>
+  <%= @percorso.data %>
+</p>
+
+<p>
+  <strong>Ora:</strong>
+  <%= @percorso.ora %>
+</p>
+
+<p>
+  <strong>Partenza:</strong>
+  <%= @percorso.partenza %>
+</p>
+
+<p>
+  <strong>Destinazione:</strong>
+  <%= @percorso.destinazione %>
+</p>
+
+<p>
+  <strong>Durata:</strong>
+  <%= @percorso.durata %>
+</p>
+
+<p>
+  <strong>Utref:</strong>
+  <%= @percorso.utref %>
+</p>
+
+<%= link_to 'Edit', edit_percorso_path(@percorso) %> |
+<%= link_to 'Back', percorsos_path %>

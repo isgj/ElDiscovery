@@ -1,0 +1,1 @@
+json.partial! "percorsos/percorso", percorso: @percorso

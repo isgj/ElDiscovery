@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  data: 2016-12-06
+  ora: 2016-12-06 11:08:15
+  partenza: MyString
+  destinazione: MyString
+  durata: 2016-12-06 11:08:15
+  utref: MyString
+
+two:
+  data: 2016-12-06
+  ora: 2016-12-06 11:08:15
+  partenza: MyString
+  destinazione: MyString
+  durata: 2016-12-06 11:08:15
+  utref: MyString

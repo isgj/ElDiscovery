@@ -1,0 +1,41 @@
+<%= form_for(@percorso) do |f| %>
+  <% if @percorso.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@percorso.errors.count, "error") %> prohibited this percorso from being saved:</h2>
+
+      <ul>
+      <% @percorso.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :data %><br>
+    <%= f.date_select :data %>
+  </div>
+  <div class="field">
+    <%= f.label :ora %><br>
+    <%= f.time_select :ora %>
+  </div>
+  <div class="field">
+    <%= f.label :partenza %><br>
+    <%= f.text_field :partenza %>
+  </div>
+  <div class="field">
+    <%= f.label :destinazione %><br>
+    <%= f.text_field :destinazione %>
+  </div>
+  <div class="field">
+    <%= f.label :durata %><br>
+    <%= f.time_select :durata %>
+  </div>
+  <div class="field">
+    <%= f.label :utref %><br>
+    <%= f.text_field :utref %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

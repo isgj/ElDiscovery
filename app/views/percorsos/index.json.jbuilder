@@ -1,0 +1,1 @@
+json.array! @percorsos, partial: 'percorsos/percorso', as: :percorso
