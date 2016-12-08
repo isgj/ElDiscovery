@@ -54,11 +54,10 @@ class PercorsosController < ApplicationController
   # DELETE /percorsos/1
   # DELETE /percorsos/1.json
   def destroy
+    @percorso = Percorso.find(params[:id])
     @percorso.destroy
-    respond_to do |format|
-      format.html { redirect_to percorsos_url, notice: 'Percorso was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+
+    redirect_to root_path
   end
 
   private
