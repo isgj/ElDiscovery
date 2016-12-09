@@ -4,7 +4,13 @@ class PercorsosController < ApplicationController
   # GET /percorsos
   # GET /percorsos.json
   def index
+    partenza = params[:partenza]
+    destinazione = params[:destinazione]
+    data = params[:data]
     @percorsos = Percorso.all
+    @percorsos = @percorsos.where("lower(partenza) = ?", partenza.downcase) if ! partenza.nil? && ! partenza.empty?
+    @percorsos = @percorsos.where("lower(destinazione) = ?", destinazione.downcase) if !destinazione.nil? && ! destinazione.empty?
+    @percorsos = @percorsos.where("lower(data) = ?", data.downcase) if !data.nil? && ! data.empty?
   end
 
   # GET /percorsos/1

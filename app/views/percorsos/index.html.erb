@@ -1,9 +1,17 @@
 <p id="notice"><%= notice %></p>
-
+<form class="form-inline text-center" action="/percorsos" method="GET" name="ricerca">
+  <div class="form-group">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input  type="text" class="form-control" placeholder="Partenza" name="partenza">
+    <input  type="text" class="form-control" placeholder="Destinazione" name="destinazione">
+    <input  type="date" class="form-control" name="data">
+    <input class="btn btn-primary" type="submit" value="Cerca">
+  </div>
+</form>
 <% if @percorsos.empty? %>
   <div class="well">
     <p class="lead text-center">
-      Non ci sono persorsi salvati!
+      Non ci sono persorsi da mostrare!
     </p>
   </div>
 <% else %>
