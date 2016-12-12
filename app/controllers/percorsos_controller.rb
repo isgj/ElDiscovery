@@ -4,7 +4,13 @@ class PercorsosController < ApplicationController
   # GET /percorsos
   # GET /percorsos.json
   def index
+    partenza = params[:partenza]
+    destinazione = params[:destinazione]
+    data = params[:data]
     @percorsos = Percorso.all
+    @percorsos = @percorsos.where("lower(partenza) = ?", partenza.downcase) if ! partenza.nil? && ! partenza.empty?
+    @percorsos = @percorsos.where("lower(destinazione) = ?", destinazione.downcase) if !destinazione.nil? && ! destinazione.empty?
+    @percorsos = @percorsos.where("lower(data) = ?", data.downcase) if !data.nil? && ! data.empty?
   end
 
   # GET /percorsos/1
@@ -54,11 +60,10 @@ class PercorsosController < ApplicationController
   # DELETE /percorsos/1
   # DELETE /percorsos/1.json
   def destroy
+    @percorso = Percorso.find(params[:id])
     @percorso.destroy
-    respond_to do |format|
-      format.html { redirect_to percorsos_url, notice: 'Percorso was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+
+    redirect_to root_path
   end
 
   private

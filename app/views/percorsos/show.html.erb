@@ -31,4 +31,5 @@
 </p>
 
 <%= link_to 'Edit', edit_percorso_path(@percorso) %> |
-<%= link_to 'Back', percorsos_path %>
+<%= link_to 'Back', percorsos_path %> |
+<%= link_to 'Destroy', percorso_path(@percorso), method: :delete, data: { confirm: 'Are you sure?' } %>

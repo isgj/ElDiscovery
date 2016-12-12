@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root 'percorsos#index'
   resources :partecipantis
   resources :utentes
   resources :percorsos

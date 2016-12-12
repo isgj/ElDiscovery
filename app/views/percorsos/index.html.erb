@@ -1,37 +1,35 @@
 <p id="notice"><%= notice %></p>
-
-<h1>Listing Percorsos</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Data</th>
-      <th>Ora</th>
-      <th>Partenza</th>
-      <th>Destinazione</th>
-      <th>Durata</th>
-      <th>Utref</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @percorsos.each do |percorso| %>
-      <tr>
-        <td><%= percorso.data %></td>
-        <td><%= percorso.ora %></td>
-        <td><%= percorso.partenza %></td>
-        <td><%= percorso.destinazione %></td>
-        <td><%= percorso.durata %></td>
-        <td><%= percorso.utref %></td>
-        <td><%= link_to 'Show', percorso %></td>
-        <td><%= link_to 'Edit', edit_percorso_path(percorso) %></td>
-        <td><%= link_to 'Destroy', percorso, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<form class="form-inline text-center" action="/percorsos" method="GET" name="ricerca">
+  <div class="form-group">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input  type="text" class="form-control" placeholder="Partenza" name="partenza">
+    <input  type="text" class="form-control" placeholder="Destinazione" name="destinazione">
+    <input  type="date" class="form-control" name="data">
+    <input class="btn btn-primary" type="submit" value="Cerca">
+  </div>
+</form>
+<% if @percorsos.empty? %>
+  <div class="well">
+    <p class="lead text-center">
+      Non ci sono persorsi da mostrare!
+    </p>
+  </div>
+<% else %>
+  <% @percorsos.each do |percorso| %>
+    <div class="well">
+      <span class="navbar-right">Qui ci va l'utente</span>
+      <span>
+        <strong><%= percorso.partenza%> - <%= percorso.destinazione%></strong><br>
+        <strong>Partenza: </strong> <%= percorso.data %> <%= percorso.ora %><br>
+        <strong>Durata: </strong> <%= percorso.durata %>
+      </span>
+      <div>
+        <p class="text-center">
+          <%= link_to "Mostra di più.", percorso_path(percorso) %>
+        </p>
+      </div>
+    </div>
     <% end %>
-  </tbody>
-</table>
+<% end %>
 
 <br>
-
-<%= link_to 'New Percorso', new_percorso_path %>
