@@ -1,3 +1,4 @@
+require 'httparty'
 class PercorsosController < ApplicationController
   before_action :set_percorso, only: [:show, :edit, :update, :destroy]
 
@@ -16,6 +17,7 @@ class PercorsosController < ApplicationController
   # GET /percorsos/1
   # GET /percorsos/1.json
   def show
+    @utente = @percorso.utref
   end
 
   # GET /percorsos/new
@@ -31,7 +33,14 @@ class PercorsosController < ApplicationController
   # POST /percorsos.json
   def create
     @percorso = Percorso.new(percorso_params)
+    a = @percorso.partenza
+    b = @percorso.destinazione
 
+    doc = HTTParty.get('https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins='+
+    a+',italia&destinations='+b+',italia&key=AIzaSyBvf51KQC6u-v6nVflhxbD0xbC1PSJEdpM')
+    d=JSON.parse(doc.body)['rows'][0]['elements'][0]['duration']['value']
+
+    @percorso.durata=d
     respond_to do |format|
       if @percorso.save
         format.html { redirect_to @percorso, notice: 'Percorso was successfully created.' }

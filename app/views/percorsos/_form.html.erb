@@ -10,7 +10,7 @@
       </ul>
     </div>
   <% end %>
-
+<div class="nuovo_percorso" align="center">
   <div class="field">
     <%= f.label :data %><br>
     <%= f.date_select :data %>
@@ -27,15 +27,13 @@
     <%= f.label :destinazione %><br>
     <%= f.text_field :destinazione %>
   </div>
-  <div class="field">
-    <%= f.label :durata %><br>
-    <%= f.time_select :durata %>
-  </div>
+<!-- qui ci va ion1-->
   <div class="field">
     <%= f.label :utref %><br>
-    <%= f.text_field :utref %>
+    <%= f.text_field :utref %> <!--da cancellaretutto il div-->
   </div>
   <div class="actions">
     <%= f.submit %>
   </div>
+</div>
 <% end %>
