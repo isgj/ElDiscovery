@@ -24,11 +24,13 @@ class PartecipantisController < ApplicationController
   # POST /partecipantis
   # POST /partecipantis.json
   def create
-    @partecipanti = Partecipanti.new(partecipanti_params)
+    id = current_user.uid
+    percorso =  params[:percorso]
+    @partecipanti = Partecipanti.new(percorso: percorso, utente:  id)
 
     respond_to do |format|
       if @partecipanti.save
-        format.html { redirect_to @partecipanti, notice: 'Partecipanti was successfully created.' }
+        format.html { redirect_to percorso_path(percorso), notice: 'Partecipanti was successfully created.' }
         format.json { render :show, status: :created, location: @partecipanti }
       else
         format.html { render :new }
