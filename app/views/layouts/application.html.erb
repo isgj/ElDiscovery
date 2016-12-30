@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
 <head>
   <title>Progetto1</title>
@@ -24,7 +25,14 @@
               <li> <%= link_to "Home", percorsos_path %> </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><%= link_to "Sign in with Facebook", percorsos_path, class: "btn btn-default btn-xs", role: "button" %></li>
+              <% if current_user  %>
+               <li><%= image_tag current_user.image_url, alt: current_user.name, class: 'img-circle' %></li>
+               <li><%= link_to 'Log Out', logout_path, method: :delete %></li> 
+              <% else  %>
+             <li><%= link_to "Sign in with Google", '/auth/google/', class: "btn btn-default btn-xs", role: "button" %></li>
+
+
+              <% end %>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
