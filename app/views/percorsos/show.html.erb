@@ -36,14 +36,7 @@
 
   <!-- codice html mettere variabile partenza destinazione denttro al link-->
   <ruby>
-  <%= #cancellare l'uguale dopo il debug
-  a = 'https://www.google.com/maps/embed/v1/directions?key=AIzaSyBvf51KQC6u-v6nVflhxbD0xbC1PSJEdpM&origin='
-  c = '+italia&destination='
-  b = @percorso.partenza
-  d = @percorso.destinazione
-  e = '+italia'
-  link = a+b+c+d+e
-  %>
+
   <div id ="center" align = "center"><iframe width="600" height="450" frameborder="1" style="border:1"
     src=https://www.google.com/maps/embed/v1/directions?key=AIzaSyBvf51KQC6u-v6nVflhxbD0xbC1PSJEdpM&origin=<%= @percorso.partenza %>+italia&destination=<%= @percorso.destinazione %>+italia></iframe>
   </div>
