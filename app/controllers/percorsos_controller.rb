@@ -17,7 +17,11 @@ class PercorsosController < ApplicationController
   # GET /percorsos/1
   # GET /percorsos/1.json
   def show
-    @utente = @percorso.utref
+    @utente = User.find_by(uid: @percorso.utref).name
+    @partecipanti = Partecipanti.all
+    @partecipanti = @partecipanti.where("percorso = ?", @percorso)
+    @varDiControllo = @partecipanti.exists?(utente: current_user.uid)
+    @partecipante = @partecipanti.find_by(utente: current_user.uid)
   end
 
   # GET /percorsos/new
@@ -33,6 +37,7 @@ class PercorsosController < ApplicationController
   # POST /percorsos.json
   def create
     @percorso = Percorso.new(percorso_params)
+    @percorso.utref = current_user.uid
     a = @percorso.partenza
     b = @percorso.destinazione
 
