@@ -6,11 +6,10 @@ class CreateUsers < ActiveRecord::Migration
       t.string :name
       t.string :location
       t.string :url
-      add_index :users, :provider
-      add_index :users, :uid
-      add_index :users, [:provider, :uid], unique: true
       t.timestamps null: false
     end
+    add_index :users, :provider
+    add_index :users, :uid
+    add_index :users, [:provider, :uid], unique: true
   end
 end
-

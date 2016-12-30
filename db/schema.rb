@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20161230090428) do
 
   create_table "users", force: :cascade do |t|
     t.string   "provider"
-    t.string   "uid"
+    t.string   "uid",        null: false
     t.string   "name"
     t.string   "location"
     t.string   "url"
@@ -41,6 +41,10 @@ ActiveRecord::Schema.define(version: 20161230090428) do
     t.datetime "updated_at", null: false
     t.string   "image_url"
   end
+
+  add_index "users", ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
+  add_index "users", ["provider"], name: "index_users_on_provider"
+  add_index "users", ["uid"], name: "index_users_on_uid"
 
   create_table "utentes", force: :cascade do |t|
     t.string   "nome"
@@ -50,25 +54,7 @@ ActiveRecord::Schema.define(version: 20161230090428) do
     t.string   "idg"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "foto"
   end
-
-  create_table "views", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.string   "users"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-  end
-
-  add_index "views", ["email"], name: "index_views_on_email", unique: true
-  add_index "views", ["reset_password_token"], name: "index_views_on_reset_password_token", unique: true
 
 end
