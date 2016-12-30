@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
-<div id="ion">
-  <div id ="left">
+<ul class="list-inline">
+  <li id ="left">
     <div id ="l-up">
       <p>
         <strong>Partenza:</strong>
@@ -32,15 +32,18 @@
       <%= link_to 'Back', percorsos_path %> |
       <%= link_to 'Destroy', percorso_path(@percorso), method: :delete, data: { confirm: 'Are you sure?' } %>
     </div>
-  </div>
+  </li>
 
   <!-- codice html mettere variabile partenza destinazione denttro al link-->
+  <li>
   <ruby>
 
-  <div id ="center" align = "center"><iframe width="600" height="450" frameborder="1" style="border:1"
+  <div id ="center" align = "center" style="display:inline-block;"><iframe width="600" height="450" frameborder="1" style="border:1"
     src=https://www.google.com/maps/embed/v1/directions?key=AIzaSyBvf51KQC6u-v6nVflhxbD0xbC1PSJEdpM&origin=<%= @percorso.partenza %>+italia&destination=<%= @percorso.destinazione %>+italia></iframe>
   </div>
 </ruby>
+</li>
+<li>
 <div id = "partecipa">
   <% if(current_user.uid != @percorso.utref && !@varDiControllo )%>
       <%=link_to "Partecipa" , partecipantis_path(:percorso => @percorso), method: :post, class: "btn btn-default" %>
@@ -58,7 +61,10 @@
     </div>
     <div id ="r-dn">
       <p>Partecipanti</p>
-      <%= @partecipanti %>
+      <% @partecipanti.each do |partecipante| %><!-- --->
+      <%= User.find_by(uid: partecipante.utente).name %>
+      <% end %>
     </div>
   </div>
-</div>
+</li>
+</ul>
