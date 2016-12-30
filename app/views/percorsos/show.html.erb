@@ -1,35 +1,55 @@
 <p id="notice"><%= notice %></p>
+<div id="ion">
+  <div id ="left">
+    <div id ="l-up">
+      <p>
+        <strong>Partenza:</strong>
+        <%= @percorso.partenza %>
+      </p>
+      <p>
+        <strong>Data:</strong>
+        <%= @percorso.data %>
+      </p>
+      <p>
+        <strong>Ora:</strong>
+        <%= @percorso.ora %>
+      </p>
+      <p>
+        <strong>Destinazione:</strong>
+        <%= @percorso.destinazione %>
+      </p>
+      <p>
+        <strong>Durata:</strong>
+        <%= @percorso.durata %>
+      </p>
+      <p>
+        <strong>Utref:</strong>
+        <%= @percorso.utref %>
+      </p>
+    </div>
+    <div id ="l-dn">
+      <%= link_to 'Edit', edit_percorso_path(@percorso) %> |
+      <%= link_to 'Back', percorsos_path %> |
+      <%= link_to 'Destroy', percorso_path(@percorso), method: :delete, data: { confirm: 'Are you sure?' } %>
+    </div>
+  </div>
 
-<p>
-  <strong>Data:</strong>
-  <%= @percorso.data %>
-</p>
+  <!-- codice html mettere variabile partenza destinazione denttro al link-->
+  <ruby>
 
-<p>
-  <strong>Ora:</strong>
-  <%= @percorso.ora %>
-</p>
+  <div id ="center" align = "center"><iframe width="600" height="450" frameborder="1" style="border:1"
+    src=https://www.google.com/maps/embed/v1/directions?key=AIzaSyBvf51KQC6u-v6nVflhxbD0xbC1PSJEdpM&origin=<%= @percorso.partenza %>+italia&destination=<%= @percorso.destinazione %>+italia></iframe>
+  </div>
+</ruby>
 
-<p>
-  <strong>Partenza:</strong>
-  <%= @percorso.partenza %>
-</p>
-
-<p>
-  <strong>Destinazione:</strong>
-  <%= @percorso.destinazione %>
-</p>
-
-<p>
-  <strong>Durata:</strong>
-  <%= @percorso.durata %>
-</p>
-
-<p>
-  <strong>Utref:</strong>
-  <%= @percorso.utref %>
-</p>
-
-<%= link_to 'Edit', edit_percorso_path(@percorso) %> |
-<%= link_to 'Back', percorsos_path %> |
-<%= link_to 'Destroy', percorso_path(@percorso), method: :delete, data: { confirm: 'Are you sure?' } %>
+  <div id ="right" align = "right">
+    <div id ="r-up">
+      <p>Creatore</p>
+      <!-- -->
+    </div>
+    <div id ="r-dn">
+      <p>Partecipanti</p>
+    <!--   -->
+    </div>
+  </div>
+</div>
