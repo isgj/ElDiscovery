@@ -44,27 +44,51 @@
 </ruby>
 </li>
 <li>
-<div id = "partecipa">
-  <% if(current_user.uid != @percorso.utref && !@varDiControllo )%>
-      <%=link_to "Partecipa" , partecipantis_path(:percorso => @percorso), method: :post, class: "btn btn-default" %>
-  <% end %>
-  <div id="cancellami">
-    <% if(@varDiControllo )%>
-        <%=link_to "Cancellami" , partecipanti_path(@partecipante), method: :delete, class: "btn btn-default" %>
+  <div id = "partecipa">
+    <% if(current_user.uid != @percorso.utref && !@isPartecipante )%>
+      <%=link_to "Partecipa" , partecipantis_path(:percorso => @percorso, :creator => @percorso.utref), method: :post, class: "btn btn-default" %>
     <% end %>
-</div>
-  <div id ="right" align = "right">
-    <div id ="r-up">
-      <p>Creatore</p>
-      <%= @utente %>
-      <!-- -->
-    </div>
-    <div id ="r-dn">
-      <p>Partecipanti</p>
-      <% @partecipanti.each do |partecipante| %><!-- --->
-      <%= User.find_by(uid: partecipante.utente).name %>
+    <div id="cancellami">
+      <% if(@isPartecipante )%>
+      <%=link_to "Cancellami" , partecipanti_path(@partecipante), method: :delete, class: "btn btn-default" %>
       <% end %>
+    </div>
+    <div id ="right" align = "right">
+      <div id ="r-up">
+        <p>Creatore</p>
+        <%= @utente %>
+        <!-- -->
+      </div>
+      <div id ="r-dn">
+        <p>Partecipanti</p>
+        <% @partecipanti.each do |partecipante| %><!-- --->
+        <%= User.find_by(uid: partecipante.utente).name %>
+        <% end %>
+      </div>
     </div>
   </div>
 </li>
+<% if @messages.empty? %>
+    <p class="lead text-center">
+      Non ci sono aggiornamenti sul percorso!
+    </p>
+<% else %>
+    <p class="lead text-center">
+      Aggiornamenti ...
+    </p>
+  <% @messages.each do |message| %>
+    <div class="well">
+      <ul class="list-inline">
+        <li>
+          <%= image_tag message[1], alt: message[2], class: 'img-circle' %><br>
+          <%= message[2] %>
+        </li>
+        <li>
+          <%= message[3] %><br>
+          <button>TO DO</button>
+        </li>
+      </ul>
+    </div>
+  <% end %>
+<% end %>
 </ul>

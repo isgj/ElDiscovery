@@ -1,4 +1,5 @@
 require 'httparty'
+require 'bunny'
 class PercorsosController < ApplicationController
   before_action :set_percorso, only: [:show, :edit, :update, :destroy]
 
@@ -20,8 +21,43 @@ class PercorsosController < ApplicationController
     @utente = User.find_by(uid: @percorso.utref).name
     @partecipanti = Partecipanti.all
     @partecipanti = @partecipanti.where("percorso = ?", @percorso)
-    @varDiControllo = @partecipanti.exists?(utente: current_user.uid)
-    @partecipante = @partecipanti.find_by(utente: current_user.uid)
+    @messages = []
+    if current_user
+      puts "Current user exists."
+      @isPartecipante = @partecipanti.exists?(utente: current_user.uid)
+      @partecipante = @partecipanti.find_by(utente: current_user.uid)
+      if @isPartecipante || current_user.uid.to_s == @percorso.utref.to_s
+        conn = Bunny.new
+        conn.start
+        ch  = conn.create_channel
+        x   = ch.topic("#{@percorso.id}")
+        q   = ch.queue("#{@percorso.id}#{current_user.uid}")
+        puts "From show: #{@percorso.id}"
+        if @isPartecipante
+          q.bind(x, :routing_key => "all")
+          q.bind(x, :routing_key => "#{current_user.uid}")
+        else
+          q.bind(x, :routing_key => "*.#{current_user.uid}")
+
+        end
+
+        begin
+          q.subscribe(:block => false) do |delivery_info, properties, body|
+            id = delivery_info.routing_key.split(".").first
+            user = User.find_by(uid: id)
+            foto = user.image_url
+            name = user.name
+            @messages.push([id, foto, name, body])
+          end
+          ch.close
+          conn.close
+        rescue Interrupt => _
+          ch.close
+          conn.close
+        end
+      end
+    end
+
   end
 
   # GET /percorsos/new
@@ -48,6 +84,18 @@ class PercorsosController < ApplicationController
     @percorso.durata=d
     respond_to do |format|
       if @percorso.save
+        conn = Bunny.new
+        conn.start
+        ch = conn.create_channel
+        x = ch.topic("#{@percorso.id}")
+        puts "Topic created: #{@percorso.id}"
+        queue = ch.queue("#{@percorso.id}#{current_user.uid}")
+        topic = "*." + current_user.uid
+        puts "Topic to bind: #{topic}"
+        queue.bind(x, :routing_key => topic)
+        ch.close
+        conn.close
+
         format.html { redirect_to @percorso, notice: 'Percorso was successfully created.' }
         format.json { render :show, status: :created, location: @percorso }
       else
