@@ -69,6 +69,14 @@ class PartecipantisController < ApplicationController
   # DELETE /partecipantis/1.json
   def destroy
     @partecipanti.destroy
+    percorso = params[:percorso]
+    conn = Bunny.new
+    conn.start
+    ch = conn.create_channel
+    queue = ch.queue("#{percorso}#{@partecipanti.utente}")
+    queue.delete
+    ch.close
+    conn.close
     respond_to do |format|
       format.html { redirect_to partecipantis_url, notice: 'Partecipanti was successfully destroyed.' }
       format.json { head :no_content }
