@@ -4,33 +4,36 @@
 <head>
   <title>Progetto1</title>
   <%= stylesheet_link_tag    'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' %>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <!-- Google fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
+
+  <!-- font awesome -->
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <nav class="navbar navbar-default">
-        <div class="container">
-          <div class="navbar-header">
+  <nav class="navbar navbar-inverse navbar-fixed-top" >
+        <div class="container" >
+          <div class="navbar-header" >
+            <%= link_to image_tag("ElDiscovery4.png"), root_path %>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <%= link_to "El Discovery", root_path, class: "navbar-brand" %>
           </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li> <%= link_to "Home", percorsos_path %> </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
+          <div id="navbar" class="navbar-collapse collapse" >
+            <ul class="nav navbar-nav navbar-right scroll">
               <% if current_user  %>
-              <%= link_to "Crea nuovo percorso", new_percorso_path %>
-               <li><%= image_tag current_user.image_url, alt: current_user.name, class: 'img-circle' %></li>
-               <li><%= link_to 'Log Out', logout_path, method: :delete %></li>
+               <li class=""><%= image_tag current_user.image_url, alt: current_user.name, class: 'img-circle' %></li>
+               <li class=""><%= link_to 'Log Out', logout_path, method: :delete, style: "margin-top:5px;" %></li>
               <% else  %>
-             <li><%= link_to "Sign in with Google", '/auth/google/', class: "btn btn-default btn-xs", role: "button" %></li>
+             <li class=""><%= link_to "Sign in with Google", '/auth/google/', style: "margin-top:5px;" %></li>
 
 
               <% end %>
@@ -38,6 +41,7 @@
           </div><!--/.nav-collapse -->
         </div>
       </nav>
+      <br><br><br><br>
 <%= yield %>
 
 </body>

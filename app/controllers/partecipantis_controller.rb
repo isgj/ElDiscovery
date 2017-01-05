@@ -1,3 +1,4 @@
+require "bunny"
 class PartecipantisController < ApplicationController
   before_action :set_partecipanti, only: [:show, :edit, :update, :destroy]
 
@@ -26,11 +27,22 @@ class PartecipantisController < ApplicationController
   def create
     id = current_user.uid
     percorso =  params[:percorso]
+    creator = params[:creator]
     @partecipanti = Partecipanti.new(percorso: percorso, utente:  id)
 
     respond_to do |format|
       if @partecipanti.save
-        format.html { redirect_to percorso_path(percorso), notice: 'Partecipanti was successfully created.' }
+        conn = Bunny.new
+        conn.start
+        ch = conn.create_channel
+        x = ch.topic("#{percorso}")
+        x.publish("Hello from #{current_user.name}", :routing_key => "#{id}.#{creator}")
+        queue = ch.queue("#{percorso}#{id}")
+        queue.bind(x, :routing_key => "all")
+        queue.bind(x, :routing_key => "#{id}")
+        ch.close
+        conn.close
+        format.html { redirect_to percorso_path(percorso), notice: 'Adesso fai parte di questo percorso!.' }
         format.json { render :show, status: :created, location: @partecipanti }
       else
         format.html { render :new }
@@ -57,8 +69,16 @@ class PartecipantisController < ApplicationController
   # DELETE /partecipantis/1.json
   def destroy
     @partecipanti.destroy
+    percorso = params[:percorso]
+    conn = Bunny.new
+    conn.start
+    ch = conn.create_channel
+    queue = ch.queue("#{percorso}#{@partecipanti.utente}")
+    queue.delete
+    ch.close
+    conn.close
     respond_to do |format|
-      format.html { redirect_to partecipantis_url, notice: 'Partecipanti was successfully destroyed.' }
+      format.html { redirect_to percorso_path(percorso), notice: 'Adesso non fai più parte di questo percorso.' }
       format.json { head :no_content }
     end
   end

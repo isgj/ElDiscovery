@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161230090428) do
+ActiveRecord::Schema.define(version: 20170105145038) do
 
   create_table "partecipantis", force: :cascade do |t|
     t.string   "percorso"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20161230090428) do
     t.string   "utref"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.string   "image"
   end
 
   create_table "users", force: :cascade do |t|
@@ -54,6 +55,7 @@ ActiveRecord::Schema.define(version: 20161230090428) do
     t.string   "idg"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "foto"
   end
 
 end

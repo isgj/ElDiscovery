@@ -1,13 +1,18 @@
 <p id="notice"><%= notice %></p>
+<% if current_user %>
+  <h4 class="text-center"><%= link_to "Crea nuovo percorso", new_percorso_path, class: 'label label-warning' %></h4>
+<% end %>
+<br>
 <form class="form-inline text-center" action="/percorsos" method="GET" name="ricerca">
   <div class="form-group">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
     <input  type="text" class="form-control" placeholder="Partenza" name="partenza">
     <input  type="text" class="form-control" placeholder="Destinazione" name="destinazione">
     <input  type="date" class="form-control" name="data">
-    <input class="btn btn-primary" type="submit" value="Cerca">
+    <input class="btn btn-primary" type="submit" value="Cerca" style="inline-block:float-right;">
   </div>
 </form>
+<br>
 <% if @percorsos.empty? %>
   <div class="well">
     <p class="lead text-center">
@@ -15,21 +20,19 @@
     </p>
   </div>
 <% else %>
+  <div class="clearfix grid">
+
   <% @percorsos.each do |percorso| %>
-    <div class="well">
-      <span class="navbar-right">Qui ci va l'utente</span>
-      <span>
-        <strong><%= percorso.partenza%> - <%= percorso.destinazione%></strong><br>
-        <strong>Partenza: </strong> <%= percorso.data %> <%= percorso.ora %><br>
-        <strong>Durata: </strong> <%= percorso.durata %>
-      </span>
-      <div>
-        <p class="text-center">
-          <%= link_to "Mostra di più.", percorso_path(percorso) %>
-        </p>
-      </div>
-    </div>
-    <% end %>
+    <figure class="effect-oscar wowload fadeIn animated" style="visibility: visible; animation-name: fadeIn;">
+      <%= image_tag('8.jpg', :alt => "website template image") %>
+      <figcaption>
+        <h2><%= percorso.partenza + " - " + percorso.destinazione %></h2>
+          <p><br>
+            <%= link_to "Mostra di più.", percorso_path(percorso) %></p>
+      </figcaption>
+    </figure>
+  <% end %>
+  </div>
 <% end %>
 
 <br>
