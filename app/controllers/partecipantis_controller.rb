@@ -42,7 +42,7 @@ class PartecipantisController < ApplicationController
         queue.bind(x, :routing_key => "#{id}")
         ch.close
         conn.close
-        format.html { redirect_to percorso_path(percorso), notice: 'Partecipanti was successfully created.' }
+        format.html { redirect_to percorso_path(percorso), notice: 'Adesso fai parte di questo percorso!.' }
         format.json { render :show, status: :created, location: @partecipanti }
       else
         format.html { render :new }
@@ -78,7 +78,7 @@ class PartecipantisController < ApplicationController
     ch.close
     conn.close
     respond_to do |format|
-      format.html { redirect_to partecipantis_url, notice: 'Partecipanti was successfully destroyed.' }
+      format.html { redirect_to percorso_path(percorso), notice: 'Adesso non fai più parte di questo percorso.' }
       format.json { head :no_content }
     end
   end
