@@ -1,8 +1,9 @@
 <p id="notice"><%= notice %></p>
 <br><br><br>
-<ul class="list-inline">
-  <li id ="left">
-    <div id ="l-up">
+<div id="pagina_percorso" style="overflow:auto;width:95%;">
+  <!--          left          left          left        left      -->
+  <div id ="left" style="margin-left:20px;width:250px;display:inline-block;">
+    <div id ="l-up" style="margin-bottom: 200px;">
       <p>
         <strong>Partenza:</strong>
         <%= @percorso.partenza %>
@@ -21,31 +22,27 @@
       </p>
       <p>
         <strong>Durata:</strong>
-        <%= @percorso.durata %>
-      </p>
-      <p>
-        <strong>Utref:</strong>
-        <%= @percorso.utref %>
+        <%= ((@percorso.durata)/60) %>
+        <strong> minuti</strong>
       </p>
     </div>
     <div id ="l-dn">
       <%= link_to 'Edit', edit_percorso_path(@percorso) %> |
-      <%= link_to 'Back', percorsos_path %> |
+      <!--<%= link_to 'Back', percorsos_path %> |-->
       <%= link_to 'Destroy', percorso_path(@percorso), method: :delete, data: { confirm: 'Are you sure?' } %>
     </div>
-  </li>
+  </div>
+<!--        center       center     center      center        center           center  -->
 
-  <!-- codice html mettere variabile partenza destinazione denttro al link-->
-  <li>
-  <ruby>
-
-  <div id ="center" align = "center" style="display:inline-block;"><iframe width="600" height="450" frameborder="1" style="border:1"
+<ruby>
+  <div id ="map" style="display:inline-block;">
+    <iframe width="600" height="450" frameborder="1" style="border:1"
     src=https://www.google.com/maps/embed/v1/directions?key=AIzaSyBvf51KQC6u-v6nVflhxbD0xbC1PSJEdpM&origin=<%= @percorso.partenza %>+italia&destination=<%= @percorso.destinazione %>+italia></iframe>
   </div>
 </ruby>
-</li>
-<li>
-  <div id = "partecipa">
+
+<!-- right      right      right      right      right      right      right      -->
+  <div id = "right" style="display:inline-block; margin-left:20px;vertical-align:top;">
     <% if(!current_user.nil? && current_user.uid != @percorso.utref && !@isPartecipante )%>
       <%=link_to "Partecipa" , partecipantis_path(:percorso => @percorso, :creator => @percorso.utref), method: :post, class: "btn btn-default" %>
     <% end %>
@@ -54,14 +51,14 @@
       <%=link_to "Cancellami" , partecipanti_path(@partecipante, :percorso => @percorso), method: :delete, class: "btn btn-default" %>
       <% end %>
     </div>
-    <div id ="right" align = "right">
-      <div id ="r-up">
-        <p>Creatore</p>
+
+      <div id ="r-up creatore" >
+        <strong>Creatore</strong><br>
+        <%= image_tag @utente, alt: @utente, class: 'img-circle' %>
         <%= @utente %>
-        <!-- -->
       </div>
-      <div id ="r-dn">
-        <p>Partecipanti</p>
+      <div id ="r-center partecipanti">
+        <strong>Partecipanti</strong><br>
         <% @partecipanteInfo.each do |partecipante| %>
           <ul class="list-inline">
             <% if(!current_user.nil?) %>
@@ -75,30 +72,32 @@
           </ul>
         <% end %>
       </div>
-    </div>
-  </div>
-</li>
-<% if @messages.empty? %>
-    <p class="lead text-center">
-      Non ci sono aggiornamenti sul percorso!
-    </p>
-<% else %>
-    <p class="lead text-center">
-      Aggiornamenti ...
-    </p>
-  <% @messages.each do |message| %>
-    <div class="well">
-      <ul class="list-inline">
-        <li>
-              <%= image_tag message[1], alt: message[2], class: 'img-circle  img-responsive center-block' %><br>
-              <%= message[2] %>
-        </li>
-        <li>
-          <%= message[3] %><br>
-          <button>TO DO</button>
-        </li>
-      </ul>
-    </div>
-  <% end %>
-<% end %>
-</ul>
+
+
+    <div id="right dn">
+      <% if @messages.empty? %>
+          <p class="lead text-center">
+            Non ci sono aggiornamenti sul percorso!
+          </p>
+      <% else %>
+          <p class="lead text-center">
+            Aggiornamenti ...
+          </p>
+        <% @messages.each do |message| %>
+          <div class="well">
+            <ul class="list-inline">
+              <li>
+                    <%= image_tag message[1], alt: message[2], class: 'img-circle  img-responsive center-block' %><br>
+                    <%= message[2] %>
+              </li>
+              <li>
+                <%= message[3] %><br>
+                <button>TO DO</button>
+              </li>
+            </ul>
+          </div>
+        <% end %>
+      <% end %>
+    </div><!--close div right dn-->
+  </div><!--close right div-->
+</div><!--close pagina_percorso -->

@@ -55,7 +55,6 @@ ActiveRecord::Schema.define(version: 20170105145038) do
     t.string   "idg"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "foto"
   end
 
 end
