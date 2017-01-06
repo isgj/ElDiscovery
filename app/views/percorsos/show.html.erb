@@ -1,104 +1,109 @@
 <p id="notice"><%= notice %></p>
 <br><br><br>
-<ul class="list-inline">
-  <li id ="left">
-    <div id ="l-up">
+<div id="pagina_percorso" style="width:98%;">
+  <!--          left          left          left        left      -->
+  <div id ="left" style="margin-left:20px;width:250px;display:inline-block;">
+    <div id ="l-up" style="margin-bottom: 200px;">
       <p>
         <strong>Partenza:</strong>
-        <%= @percorso.partenza %>
+        <%= @percorso.partenza.capitalize %>
       </p>
       <p>
         <strong>Data:</strong>
-        <%= @percorso.data %>
+        <%= @percorso.data.strftime("%d-%m-%Y") %>
       </p>
       <p>
         <strong>Ora:</strong>
-        <%= @percorso.ora %>
+        <%= @percorso.ora.hour  %>:<%= @percorso.ora.min  %>
       </p>
       <p>
         <strong>Destinazione:</strong>
-        <%= @percorso.destinazione %>
+        <%= @percorso.destinazione.capitalize %>
       </p>
       <p>
         <strong>Durata:</strong>
-        <%= @percorso.durata %>
-      </p>
-      <p>
-        <strong>Utref:</strong>
-        <%= @percorso.utref %>
+        <%= ((@percorso.durata)/60) %>
+        <strong> minuti</strong>
       </p>
     </div>
     <div id ="l-dn">
       <%= link_to 'Edit', edit_percorso_path(@percorso) %> |
-      <%= link_to 'Back', percorsos_path %> |
+      <!--<%= link_to 'Back', percorsos_path %> |-->
       <%= link_to 'Destroy', percorso_path(@percorso), method: :delete, data: { confirm: 'Are you sure?' } %>
     </div>
-  </li>
+  </div>
+<!--        center       center     center      center        center           center  -->
 
-  <!-- codice html mettere variabile partenza destinazione denttro al link-->
-  <li>
-  <ruby>
-
-  <div id ="center" align = "center" style="display:inline-block;"><iframe width="600" height="450" frameborder="1" style="border:1"
+<ruby>
+  <div id ="map" style="display:inline-block;">
+    <iframe width="600" height="450" frameborder="1" style="border:1"
     src=https://www.google.com/maps/embed/v1/directions?key=AIzaSyBvf51KQC6u-v6nVflhxbD0xbC1PSJEdpM&origin=<%= @percorso.partenza %>+italia&destination=<%= @percorso.destinazione %>+italia></iframe>
   </div>
 </ruby>
-</li>
-<li>
-  <div id = "partecipa">
-    <% if(!current_user.nil? && current_user.uid != @percorso.utref && !@isPartecipante )%>
-      <%=link_to "Partecipa" , partecipantis_path(:percorso => @percorso, :creator => @percorso.utref), method: :post, class: "btn btn-default" %>
-    <% end %>
-    <div id="cancellami">
-      <% if(@isPartecipante )%>
-      <%=link_to "Cancellami" , partecipanti_path(@partecipante, :percorso => @percorso), method: :delete, class: "btn btn-default" %>
-      <% end %>
-    </div>
-    <div id ="right" align = "right">
-      <div id ="r-up">
-        <p>Creatore</p>
-        <%= @utente %>
-        <!-- -->
-      </div>
-      <div id ="r-dn">
-        <p>Partecipanti</p>
-        <% @partecipanteInfo.each do |partecipante| %>
-          <ul class="list-inline">
-            <% if(!current_user.nil?) %>
-              <li class="list-group-item">
-                <%= image_tag partecipante[0], alt: partecipante[1], class: 'img-circle' %>
-            <% end %>
-            <span class="badge" style="margin-top:15px;">
-              <%= partecipante[1] %>
-            </span>
-            </li>
-          </ul>
-        <% end %>
-      </div>
-    </div>
+
+<!-- right      right      right      right      right      right      right      -->
+<div id = "right" style="display:inline-block; margin-left:50px; vertical-align:top">
+  <div id ="r-up creatore" >
+    <strong>Creatore</strong><br>
+    <li class="list-group-item">
+    <%= image_tag @fotoC, alt: @utente, class: 'img-circle' %>
+    <span class="badge" style="margin-top:15px;">
+    <%= @utente %>
+    </span>
+  </li>
   </div>
-</li>
-<% if @messages.empty? %>
+  <br>
+
+  <div id ="r-center partecipanti">
+    <strong>Partecipanti</strong><br>
+    <% @partecipanteInfo.each do |partecipante| %>
+    <% if(!current_user.nil?) %>
+    <li class="list-group-item">
+      <%= image_tag partecipante[0], alt: partecipante[1], class: 'img-circle' %>
+      <% end %>
+      <span class="badge" style="margin-top:15px;">
+      <%= partecipante[1] %>
+      </span>
+    </li>
+    <% end %>
+  </div>
+  <br>
+<!-- msg+reg      msg+reg      msg+reg      msg+reg      msg+reg      msg+reg      -->
+<div id="right dn" >
+  <% if @messages.empty? %>
     <p class="lead text-center">
-      Non ci sono aggiornamenti sul percorso!
+        Non ci sono aggiornamenti sul percorso!
     </p>
-<% else %>
+  <% else %>
     <p class="lead text-center">
       Aggiornamenti ...
     </p>
-  <% @messages.each do |message| %>
-    <div class="well">
-      <ul class="list-inline">
-        <li>
+      <% @messages.each do |message| %>
+        <div id="well">
+          <ul class="list-inline">
+            <li>
               <%= image_tag message[1], alt: message[2], class: 'img-circle  img-responsive center-block' %><br>
               <%= message[2] %>
-        </li>
-        <li>
-          <%= message[3] %><br>
-          <button>TO DO</button>
-        </li>
-      </ul>
-    </div>
+            </li>
+            <li>
+              <%= message[3] %><br>
+            </li>
+          </ul>
+        </div>
+        <% end %>
+    <% end %>
+
+<div id="part_canc" style="max-width:280px;margin:auto;">
+    <% if(!current_user.nil? && current_user.uid != @percorso.utref && !@isPartecipante )%>
+    <%=link_to "Partecipa" , partecipantis_path(:percorso => @percorso, :creator => @percorso.utref), method: :post, class: "btn btn-default" %>
+    <% end %>
+
+  <% if(@isPartecipante )%>
+  <%=link_to "Cancellami" , partecipanti_path(@partecipante, :percorso => @percorso), method: :delete, class: "btn btn-default" %>
   <% end %>
-<% end %>
-</ul>
+  <!--pulsante da configurare per messaggi-->
+  <input type="button" class="btn btn-info" value="Invia messaggio!"></input>
+</div>
+    </div><!--close div right dn-->
+  </div><!--close right div-->
+</div><!--close pagina_percorso -->
