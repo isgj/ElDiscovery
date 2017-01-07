@@ -49,3 +49,7 @@ end
 
 # Use Bunny gem for RabbitMQ
 gem 'bunny'
+
+# Getting bootstrap
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'autoprefixer-rails'

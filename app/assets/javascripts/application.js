@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require bootstrap-sprockets
 //= require_tree .
 /*function coordinate(str){
   var c = "https://maps.googleapis.com/maps/api/geocode/json?address="+str+"&key=AIzaSyBvf51KQC6u-v6nVflhxbD0xbC1PSJEdpM";

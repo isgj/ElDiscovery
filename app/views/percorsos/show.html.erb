@@ -27,9 +27,9 @@
       </p>
     </div>
     <div id ="l-dn">
-      <%= link_to 'Edit', edit_percorso_path(@percorso) %> |
+      <%= link_to 'Aggiorna', edit_percorso_path(@percorso), class: 'link-form' %>
       <!--<%= link_to 'Back', percorsos_path %> |-->
-      <%= link_to 'Destroy', percorso_path(@percorso), method: :delete, data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Cancella', percorso_path(@percorso), method: :delete, data: { confirm: 'Sei sicuro?' }, class: 'link-form' %>
     </div>
   </div>
 <!--        center       center     center      center        center           center  -->
