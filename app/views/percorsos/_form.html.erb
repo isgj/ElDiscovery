@@ -10,27 +10,22 @@
       </ul>
     </div>
   <% end %>
-<div class="nuovo_percorso" align="center">
-  <div class="field">
-    <%= f.label :data %><br>
-    <%= f.date_select :data %>
-  </div>
-  <div class="field">
-    <%= f.label :ora %><br>
+  <fieldset>
+    <legend><%= f.label :data %></legend>
+    <%= f.date_select('data', start_year: 2017) %>
+  </fieldset><br>
+  <fieldset>
+    <legend><%= f.label :ora %></legend>
     <%= f.time_select :ora %>
-  </div>
-  <div class="field">
-    <%= f.label :partenza %><br>
+  </fieldset><br>
+  <fieldset>
+    <legend><%= f.label :partenza %></legend>
     <%= f.text_field :partenza %>
-  </div>
-  <div class="field">
-    <%= f.label :destinazione %><br>
+  </fieldset><br>
+  <fieldset>
+    <legend><%= f.label :destinazione %></legend>
     <%= f.text_field :destinazione %>
-  </div>
+  </fieldset>
 
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-</div>
+  <%= f.submit class: 'btn btn-primary' %>
 <% end %>
