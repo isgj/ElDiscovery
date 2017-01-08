@@ -1,0 +1,8 @@
+$('#partecipaButton').slideUp('slow', function() {
+  var a = $('<%=link_to "Cancellami" , partecipanti_path(@partecipanti, :percorso => @percorso.id), method: :delete, class: "btn btn-danger", id: "cancellaButton", remote: true %>').hide();
+  $(this).replaceWith(a);
+  $('#cancellaButton').slideDown('slow');
+});
+var partecipanteDiv = $('<div id="yourPartecipa"><li class="list-group-item"><%= j image_tag current_user.image_url, alt: current_user.name, class: "img-circle" %><span class="badge" style="margin-top:15px;"><%= j current_user.name %></span></li></div>').hide();
+$('#center-partecipanti').append(partecipanteDiv);
+$('#yourPartecipa').slideDown('slow');

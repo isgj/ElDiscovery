@@ -27,7 +27,7 @@ class PercorsosController < ApplicationController
       user = User.find_by(uid: p.utente)
       foto = user.image_url
       name = user.name
-      @partecipanteInfo.push([foto, name])
+      @partecipanteInfo.push([foto, name, user.uid])
     end
     @messages = []
     if current_user

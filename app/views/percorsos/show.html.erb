@@ -54,22 +54,28 @@
   </div>
   <br>
 
-  <div id ="r-center partecipanti">
+  <div id ="center-partecipanti">
     <strong>Partecipanti</strong><br>
     <% @partecipanteInfo.each do |partecipante| %>
-    <% if(!current_user.nil?) %>
-    <li class="list-group-item">
-      <%= image_tag partecipante[0], alt: partecipante[1], class: 'img-circle' %>
+      <% if current_user.uid == partecipante[2] %>
+        <div id="yourPartecipa">
+      <% else %>
+        <div>
+      <% end %>
+      <% if(!current_user.nil?) %>
+        <li class="list-group-item">
+          <%= image_tag partecipante[0], alt: partecipante[1], class: 'img-circle' %>
       <% end %>
       <span class="badge" style="margin-top:15px;">
-      <%= partecipante[1] %>
+        <%= partecipante[1] %>
       </span>
-    </li>
+        </li>
+      </div>
     <% end %>
   </div>
   <br>
 <!-- msg+reg      msg+reg      msg+reg      msg+reg      msg+reg      msg+reg      -->
-<div id="right dn" >
+<div id="right-dn" >
   <% if @messages.empty? %>
     <p class="lead text-center">
         Non ci sono aggiornamenti sul percorso!
@@ -95,11 +101,13 @@
 
 <div id="part_canc" style="max-width:280px;margin:auto;">
     <% if(!current_user.nil? && current_user.uid != @percorso.utref && !@isPartecipante )%>
-    <%=link_to "Partecipa" , partecipantis_path(:percorso => @percorso, :creator => @percorso.utref), method: :post, class: "btn btn-default" %>
+      <%=link_to "Partecipa" , partecipantis_path(:percorso => @percorso, :creator => @percorso.utref),
+      method: :post, class: "btn btn-success", id: 'partecipaButton', remote: true %>
     <% end %>
 
   <% if(@isPartecipante )%>
-  <%=link_to "Cancellami" , partecipanti_path(@partecipante, :percorso => @percorso), method: :delete, class: "btn btn-default" %>
+    <%=link_to "Cancellami" , partecipanti_path(@partecipante, :percorso => @percorso),
+    method: :delete, class: "btn btn-danger", id: 'cancellaButton', remote: true %>
   <% end %>
   <!--pulsante da configurare per messaggi-->
   <input type="button" class="btn btn-info" value="Invia messaggio!"></input>

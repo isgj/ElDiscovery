@@ -1,0 +1,8 @@
+$('#cancellaButton').slideUp('slow', function() {
+  var a = $('<%= j link_to "Partecipa", partecipantis_path(:percorso => @percorso.id, :creator => @percorso.utref), method: :post, class: "btn btn-success", id: "partecipaButton", remote: true %>').hide();
+  $(this).replaceWith(a);
+  $('#partecipaButton').slideDown('slow');
+});
+$('#yourPartecipa').slideUp('slow', function () {
+  this.remove();
+});
