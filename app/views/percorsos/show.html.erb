@@ -38,14 +38,16 @@
             <div class="col-xs-4 col-md-5"><strong>Durata:</strong></div>
             <div class="col-xs-8 col-md-7"><%= ((@percorso.durata)/60) %><strong> minuti</strong></div>
           </div>
+          <% if current_user.uid == @percorso.utref %>
           <div id ="l-dn" class="row justify-content-around text-center">
-            <div class="col-xs-6 col-md-4">
-              <%= link_to 'Aggiorna', edit_percorso_path(@percorso), class: 'link-form' %>
+              <div class="col-xs-6 col-md-4">
+                <%= link_to 'Aggiorna', edit_percorso_path(@percorso), class: 'link-form' %>
+              </div>
+              <div class="col-xs-6 col-md-4">
+                <%= link_to 'Cancella', percorso_path(@percorso), method: :delete, data: { confirm: 'Sei sicuro?' }, class: 'link-form' %>
+              </div>
             </div>
-            <div class="col-xs-6 col-md-4">
-              <%= link_to 'Cancella', percorso_path(@percorso), method: :delete, data: { confirm: 'Sei sicuro?' }, class: 'link-form' %>
-            </div>
-          </div>
+          <% end %>
         </fieldset>
       </div>
     </div>
