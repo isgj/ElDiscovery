@@ -18,8 +18,9 @@ class PercorsosController < ApplicationController
   # GET /percorsos/1
   # GET /percorsos/1.json
   def show
-    @utente = User.find_by(uid: @percorso.utref).name
-    @fotoC = User.find_by(uid: @percorso.utref).image_url
+    utente = User.find_by(uid: @percorso.utref)
+    @utente = utente.name
+    @fotoC = utente.image_url
     @partecipanti = Partecipanti.all
     @partecipanti = @partecipanti.where("percorso = ?", @percorso)
     @partecipanteInfo = []
