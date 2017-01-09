@@ -1,0 +1,11 @@
+<%= form_for(@percorso, url: send_message_percorso_url, remote: true) do |f| %>
+  <div class="col-xs-7">
+    <%= text_area(:message, :text, rows: 3, cols: 17) %>
+  </div>
+  <%= hidden_field(:destinatario, :id, value: @idDestinatario) %>
+  <div class="col-xs-5">
+    <%= f.submit "Invia", class: "btn btn-success center-block message_invia" %>
+    <br>
+    <a class="btn btn-danger center-block message_cancella">Cancella</a>
+  </div>
+<% end %>

@@ -44,15 +44,21 @@ class PercorsosController < ApplicationController
           q.bind(x, :routing_key => "#{current_user.uid}")
         else
           q.bind(x, :routing_key => "*.#{current_user.uid}")
-
         end
 
         begin
           q.subscribe(:block => false) do |delivery_info, properties, body|
-            id = delivery_info.routing_key.split(".").first
-            user = User.find_by(uid: id)
-            foto = user.image_url
-            name = user.name
+            if @isPartecipante
+              id = delivery_info.routing_key
+              user = User.find_by(uid: @percorso.utref)
+              foto = user.image_url
+              name = user.name
+            else
+              id = delivery_info.routing_key.split(".").first
+              user = User.find_by(uid: id)
+              foto = user.image_url
+              name = user.name
+            end
             @messages.push([id, foto, name, body])
           end
           ch.close
@@ -130,6 +136,19 @@ class PercorsosController < ApplicationController
     @percorso.destroy
 
     redirect_to root_path
+  end
+
+  def send_message
+    @percorso = Percorso.find(params[:id])
+    text = params[:message][:text]
+    destinatario = params[:destinatario][:id]
+    conn = Bunny.new
+    conn.start
+    ch = conn.create_channel
+    x = ch.topic("#{@percorso.id}")
+    x.publish(text, :routing_key => destinatario)
+    ch.close
+    conn.close
   end
 
   private

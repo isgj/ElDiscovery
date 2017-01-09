@@ -1,0 +1,44 @@
+<div id="messages">
+  <br>
+  <strong>Messaggi:</strong>
+  <br>
+  <% if @messages.nil? || @messages.empty? %>
+    <p class="text-center">
+        Non ci sono aggiornamenti sul percorso!
+    </p>
+  <% else %>
+      <% @messages.each do |message| %>
+        <div class="message_div">
+          <div class="row">
+            <div class="col-xs-3 justify-content-center">
+              <div class="row text-center">
+                <%= image_tag message[1], alt: message[2], class: 'img-circle  img-responsive center-block' %>
+              </div>
+              <div class="row text-center">
+                <%= message[2] %>
+              </div>
+            </div>
+            <div class="col-xs-9">
+              <div class="row">
+                <%= message[3] %><br>
+              </div>
+              <br>
+              <% if current_user.uid == @percorso.utref %>
+                <div class="row">
+                  <div class="col-xs-4">
+                    <button type="button" name="button" class="btn btn-primary rispondi">Rispondi</button>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <% if current_user.uid == @percorso.utref %>
+            <div class="row messageArea" style="display: none;">
+              <% @idDestinatario = message[0] %>
+              <%= render 'message_form' %>
+            </div>
+          <% end %>
+        </div>
+        <% end %>
+    <% end %>
+</div>

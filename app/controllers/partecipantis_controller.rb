@@ -27,7 +27,6 @@ class PartecipantisController < ApplicationController
   def create
     id = current_user.uid
     @percorso = Percorso.find(params[:percorso])
-    creator = params[:creator]
     @partecipanti = Partecipanti.new(percorso: @percorso.id, utente:  id)
 
     respond_to do |format|
@@ -36,7 +35,6 @@ class PartecipantisController < ApplicationController
         conn.start
         ch = conn.create_channel
         x = ch.topic("#{@percorso.id}")
-        x.publish("Hello from #{current_user.name}", :routing_key => "#{id}.#{creator}")
         queue = ch.queue("#{@percorso.id}#{id}")
         queue.bind(x, :routing_key => "all")
         queue.bind(x, :routing_key => "#{id}")

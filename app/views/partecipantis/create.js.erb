@@ -1,8 +1,28 @@
-$('#partecipaButton').slideUp('slow', function() {
-  var a = $('<%=link_to "Cancellami" , partecipanti_path(@partecipanti, :percorso => @percorso.id), method: :delete, class: "btn btn-danger", id: "cancellaButton", remote: true %>').hide();
+$('#partecipaButton').fadeOut('slow', function() {
+  var a = $('<%=link_to "Cancellami" , partecipanti_path(@partecipanti, :percorso => @percorso.id), method: :delete, class: "btn btn-danger center-block", id: "cancellaButton", remote: true %>').hide();
   $(this).replaceWith(a);
-  $('#cancellaButton').slideDown('slow');
+  $('#cancellaButton').fadeIn('slow');
 });
 var partecipanteDiv = $('<div id="yourPartecipa"><li class="list-group-item"><%= j image_tag current_user.image_url, alt: current_user.name, class: "img-circle" %><span class="badge" style="margin-top:15px;"><%= j current_user.name %></span></li></div>').hide();
 $('#center-partecipanti').append(partecipanteDiv);
 $('#yourPartecipa').slideDown('slow');
+$('#message_container').append('<%= j render "percorsos/messages" %>');
+$('#message_button').children(':eq(0)').after('<a class="btn btn-primary rispondi center-block">Invia messaggio al creatore!</a>');
+$('#message_button').slideDown();
+$('.rispondi').click( function () {
+  $(this).slideUp()
+  .closest('.message_div')
+  .children('.messageArea')
+  .slideDown();
+});
+$('.message_cancella').click( function () {
+  $(this).closest('.messageArea')
+  .slideUp()
+  .closest('.message_div')
+  .find('.rispondi')
+  .slideDown();
+});
+$('.message_invia').click( function () {
+  $(this).closest('.messageArea')
+  .attr('id', 'sending');
+});

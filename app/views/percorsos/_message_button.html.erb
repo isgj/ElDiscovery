@@ -1,0 +1,14 @@
+<div class="row message_div" id="message_button">
+  <br>
+  <% if @isPartecipante %>
+    <% @idDestinatario = "#{current_user.uid}.#{@percorso.utref}" %>
+    <a class="btn btn-primary rispondi center-block">Invia messaggio al creatore!</a>
+  <% end %>
+  <% if current_user.uid == @percorso.utref  %>
+    <% @idDestinatario = 'all' %>
+    <a class="btn btn-primary rispondi center-block">Invia messaggio a tutti i partecipanti!</a>
+  <% end %>
+  <div class="row messageArea" style="display: none;">
+    <%= render 'percorsos/message_form' %>
+  </div>
+</div>

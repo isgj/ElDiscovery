@@ -2,10 +2,14 @@ Rails.application.routes.draw do
   root 'percorsos#index'
   resources :partecipantis
   resources :percorsos
-  
+
   get '/auth/google/callback', to:  "sessions#create"
-  
+
   delete '/logout', to: 'sessions#destroy'
+
+  resources :percorsos do
+    patch :send_message, on: :member
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -24,7 +28,7 @@ Rails.application.routes.draw do
   # Example resource route with options:
   #   resources :products do
   #     member do
-  #       get 'short' 
+  #       get 'short'
   #       post 'toggle'
   #     end
   #
@@ -60,5 +64,5 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  
+
 end
