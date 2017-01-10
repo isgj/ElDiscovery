@@ -23,3 +23,5 @@ $(document).on 'turbolinks:load', ->
   $('.message_invia').click ->
     $(this).closest '.messageArea'
       .attr 'id', 'sending'
+    $(this).closest 'form'
+      .submit()

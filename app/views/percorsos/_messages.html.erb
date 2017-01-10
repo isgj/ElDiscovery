@@ -24,10 +24,8 @@
               </div>
               <br>
               <% if current_user.uid == @percorso.utref %>
-                <div class="row">
-                  <div class="col-xs-4">
-                    <button type="button" name="button" class="btn btn-primary rispondi">Rispondi</button>
-                  </div>
+                <div class="row text-right">
+                  <a class="btn btn-primary rispondi" style="margin-right:15px;">Rispondi</a>
                 </div>
               <% end %>
             </div>
