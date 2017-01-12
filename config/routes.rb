@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   root 'percorsos#index'
-  resources :partecipantis
-  resources :percorsos
+  resources :percorsos do
+    resources :partecipantis, only: [:create, :destroy]
+  end
 
   get '/auth/google/callback', to:  "sessions#create"
 
@@ -9,6 +10,7 @@ Rails.application.routes.draw do
 
   resources :percorsos do
     patch :send_message, on: :member
+    patch :aggiorna_photo, on: :member
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

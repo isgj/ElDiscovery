@@ -1,6 +1,6 @@
 <strong>Partecipanti</strong><br>
 <% @partecipanteInfo.each do |partecipante| %>
-  <% if current_user.uid == partecipante[2] %>
+  <% if current_user && current_user.uid == partecipante[2] %>
     <div id="yourPartecipa">
   <% else %>
     <div>

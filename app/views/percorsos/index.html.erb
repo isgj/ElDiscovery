@@ -22,7 +22,11 @@
   <div class="clearfix grid">
   <% @percorsos.each do |percorso| %>
     <figure class="effect-oscar wowload fadeIn animated" style="visibility: visible; animation-name: fadeIn;">
-      <%= image_tag('8.jpg', :alt => "website template image") %>
+      <% if !percorso.image.nil? %>
+        <%= image_tag(percorso.image , :alt => 'foto della città') %>
+      <% else %>
+        <%= image_tag('8.jpg', :alt => 'foto della città') %>
+      <% end %>
       <figcaption>
         <h2><%= percorso.partenza + " - " + percorso.destinazione %></h2>
           <p>Data di partenza: <%= percorso.data %><br>

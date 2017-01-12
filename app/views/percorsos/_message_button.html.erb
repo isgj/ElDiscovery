@@ -4,7 +4,7 @@
     <% @idDestinatario = "#{current_user.uid}.#{@percorso.utref}" %>
     <a class="btn btn-primary rispondi center-block">Invia messaggio al creatore!</a>
   <% end %>
-  <% if current_user.uid == @percorso.utref  %>
+  <% if current_user && current_user.uid == @percorso.utref  %>
     <% @idDestinatario = 'all' %>
     <a class="btn btn-primary rispondi center-block">Invia messaggio a tutti i partecipanti!</a>
   <% end %>

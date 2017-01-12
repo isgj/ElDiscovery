@@ -1,5 +1,5 @@
 $('#cancellaButton').fadeOut('slow', function() {
-  var a = $('<%= j link_to "Partecipa", partecipantis_path(:percorso => @percorso.id, :creator => @percorso.utref), method: :post, class: "btn btn-success center-block", id: "partecipaButton", remote: true %>').hide();
+  var a = $('<%= j link_to "Partecipa", percorso_partecipantis_path(@percorso, :percorso => @percorso.id, :creator => @percorso.utref), method: :post, class: "btn btn-success center-block", id: "partecipaButton", remote: true %>').hide();
   $(this).replaceWith(a);
   $('#partecipaButton').fadeIn('slow');
 });

@@ -2,6 +2,7 @@ require 'httparty'
 require 'bunny'
 class PercorsosController < ApplicationController
   before_action :set_percorso, only: [:show, :edit, :update, :destroy]
+  before_filter :require_login, except: [:index, :show]
 
   # GET /percorsos
   # GET /percorsos.json
@@ -152,6 +153,11 @@ class PercorsosController < ApplicationController
     conn.close
   end
 
+  def aggiorna_photo
+    @percorso = Percorso.find(params[:id])
+    @percorso.image = params[:patch][:photo]
+    @percorso.save
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_percorso
@@ -161,5 +167,11 @@ class PercorsosController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def percorso_params
       params.require(:percorso).permit(:data, :ora, :partenza, :destinazione, :durata, :utref)
+    end
+
+    def require_login
+      unless current_user
+        redirect_to '/auth/google/'
+      end
     end
 end

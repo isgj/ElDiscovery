@@ -25,3 +25,12 @@ $(document).on 'turbolinks:load', ->
       .attr 'id', 'sending'
     $(this).closest 'form'
       .submit()
+  $('#link_photo').click ->
+    $(this).slideUp 'slow', ->
+      $('#photo_container').slideDown 'slow'
+  $('#cancella_photo').click ->
+    $('#photo_container').slideUp 'slow', ->
+      $('#link_photo').slideDown 'slow'
+  $('#aggiorna_photo').click ->
+    $(this).closest 'form'
+      .submit()
