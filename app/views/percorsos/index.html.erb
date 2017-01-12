@@ -19,7 +19,7 @@
     </p>
   </div>
 <% else %>
-  <div class="clearfix grid">
+  <section id="percorsi">
   <% @percorsos.each do |percorso| %>
     <figure class="effect-oscar wowload fadeIn animated" style="visibility: visible; animation-name: fadeIn;">
       <% if !percorso.image.nil? %>
@@ -34,5 +34,5 @@
       </figcaption>
     </figure>
   <% end %>
-  </div>
+</section>
 <% end %>
