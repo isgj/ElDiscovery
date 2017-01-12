@@ -26,23 +26,22 @@ class PartecipantisController < ApplicationController
   # POST /partecipantis.json
   def create
     id = current_user.uid
-    percorso =  params[:percorso]
-    creator = params[:creator]
-    @partecipanti = Partecipanti.new(percorso: percorso, utente:  id)
+    @percorso = Percorso.find(params[:percorso])
+    @partecipanti = Partecipanti.new(percorso: @percorso.id, utente:  id)
 
     respond_to do |format|
       if @partecipanti.save
         conn = Bunny.new
         conn.start
         ch = conn.create_channel
-        x = ch.topic("#{percorso}")
-        x.publish("Hello from #{current_user.name}", :routing_key => "#{id}.#{creator}")
-        queue = ch.queue("#{percorso}#{id}")
+        x = ch.topic("#{@percorso.id}")
+        queue = ch.queue("#{@percorso.id}#{id}")
         queue.bind(x, :routing_key => "all")
         queue.bind(x, :routing_key => "#{id}")
         ch.close
         conn.close
         format.html { redirect_to percorso_path(percorso), notice: 'Adesso fai parte di questo percorso!.' }
+        format.js {}
         format.json { render :show, status: :created, location: @partecipanti }
       else
         format.html { render :new }
@@ -69,16 +68,17 @@ class PartecipantisController < ApplicationController
   # DELETE /partecipantis/1.json
   def destroy
     @partecipanti.destroy
-    percorso = params[:percorso]
+    @percorso = Percorso.find(params[:percorso])
     conn = Bunny.new
     conn.start
     ch = conn.create_channel
-    queue = ch.queue("#{percorso}#{@partecipanti.utente}")
+    queue = ch.queue("#{@percorso.id}#{@partecipanti.utente}")
     queue.delete
     ch.close
     conn.close
     respond_to do |format|
-      format.html { redirect_to percorso_path(percorso), notice: 'Adesso non fai più parte di questo percorso.' }
+      format.html { redirect_to percorso_path(@percorso.id), notice: 'Adesso non fai più parte di questo percorso.' }
+      format.js {}
       format.json { head :no_content }
     end
   end

@@ -2,6 +2,7 @@ require 'httparty'
 require 'bunny'
 class PercorsosController < ApplicationController
   before_action :set_percorso, only: [:show, :edit, :update, :destroy]
+  before_filter :require_login, except: [:index, :show]
 
   # GET /percorsos
   # GET /percorsos.json
@@ -18,8 +19,9 @@ class PercorsosController < ApplicationController
   # GET /percorsos/1
   # GET /percorsos/1.json
   def show
-    @utente = User.find_by(uid: @percorso.utref).name
-    @fotoC = User.find_by(uid: @percorso.utref).image_url
+    utente = User.find_by(uid: @percorso.utref)
+    @utente = utente.name
+    @fotoC = utente.image_url
     @partecipanti = Partecipanti.all
     @partecipanti = @partecipanti.where("percorso = ?", @percorso)
     @partecipanteInfo = []
@@ -27,7 +29,7 @@ class PercorsosController < ApplicationController
       user = User.find_by(uid: p.utente)
       foto = user.image_url
       name = user.name
-      @partecipanteInfo.push([foto, name])
+      @partecipanteInfo.push([foto, name, user.uid])
     end
     @messages = []
     if current_user
@@ -44,15 +46,21 @@ class PercorsosController < ApplicationController
           q.bind(x, :routing_key => "#{current_user.uid}")
         else
           q.bind(x, :routing_key => "*.#{current_user.uid}")
-
         end
 
         begin
           q.subscribe(:block => false) do |delivery_info, properties, body|
-            id = delivery_info.routing_key.split(".").first
-            user = User.find_by(uid: id)
-            foto = user.image_url
-            name = user.name
+            if @isPartecipante
+              id = delivery_info.routing_key
+              user = User.find_by(uid: @percorso.utref)
+              foto = user.image_url
+              name = user.name
+            else
+              id = delivery_info.routing_key.split(".").first
+              user = User.find_by(uid: id)
+              foto = user.image_url
+              name = user.name
+            end
             @messages.push([id, foto, name, body])
           end
           ch.close
@@ -132,6 +140,24 @@ class PercorsosController < ApplicationController
     redirect_to root_path
   end
 
+  def send_message
+    @percorso = Percorso.find(params[:id])
+    text = params[:message][:text]
+    destinatario = params[:destinatario][:id]
+    conn = Bunny.new
+    conn.start
+    ch = conn.create_channel
+    x = ch.topic("#{@percorso.id}")
+    x.publish(text, :routing_key => destinatario)
+    ch.close
+    conn.close
+  end
+
+  def aggiorna_photo
+    @percorso = Percorso.find(params[:id])
+    @percorso.image = params[:patch][:photo]
+    @percorso.save
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_percorso
@@ -141,5 +167,11 @@ class PercorsosController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def percorso_params
       params.require(:percorso).permit(:data, :ora, :partenza, :destinazione, :durata, :utref)
+    end
+
+    def require_login
+      unless current_user
+        redirect_to '/auth/google/'
+      end
     end
 end

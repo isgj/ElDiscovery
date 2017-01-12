@@ -1,0 +1,17 @@
+<strong>Partecipanti</strong><br>
+<% @partecipanteInfo.each do |partecipante| %>
+  <% if current_user && current_user.uid == partecipante[2] %>
+    <div id="yourPartecipa">
+  <% else %>
+    <div>
+  <% end %>
+  <% if(!current_user.nil?) %>
+    <li class="list-group-item">
+      <%= image_tag partecipante[0], alt: partecipante[1], class: 'img-circle' %>
+  <% end %>
+  <span class="badge" style="margin-top:15px;">
+    <%= partecipante[1] %>
+  </span>
+    </li>
+  </div>
+<% end %>

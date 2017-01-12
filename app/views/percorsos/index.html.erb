@@ -1,8 +1,7 @@
 <p id="notice"><%= notice %></p>
 <% if current_user %>
-  <h4 class="text-center"><%= link_to "Crea nuovo percorso", new_percorso_path, class: 'label label-warning' %></h4>
+  <p class="lead text-center"><%= link_to "Crea nuovo percorso", new_percorso_path, class: 'label label-warning' %></p>
 <% end %>
-<br>
 <form class="form-inline text-center" action="/percorsos" method="GET" name="ricerca">
   <div class="form-group">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
@@ -20,19 +19,20 @@
     </p>
   </div>
 <% else %>
-  <div class="clearfix grid">
-
+  <section id="percorsi">
   <% @percorsos.each do |percorso| %>
     <figure class="effect-oscar wowload fadeIn animated" style="visibility: visible; animation-name: fadeIn;">
-      <%= image_tag('8.jpg', :alt => "website template image") %>
+      <% if !percorso.image.nil? %>
+        <%= image_tag(percorso.image , :alt => 'foto della città') %>
+      <% else %>
+        <%= image_tag('8.jpg', :alt => 'foto della città') %>
+      <% end %>
       <figcaption>
         <h2><%= percorso.partenza + " - " + percorso.destinazione %></h2>
-          <p><br>
+          <p>Data di partenza: <%= percorso.data %><br>
             <%= link_to "Mostra di più.", percorso_path(percorso) %></p>
       </figcaption>
     </figure>
   <% end %>
-  </div>
+</section>
 <% end %>
-
-<br>

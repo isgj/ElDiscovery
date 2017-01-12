@@ -1,109 +1,97 @@
 <p id="notice"><%= notice %></p>
 <br><br><br>
-<div id="pagina_percorso" style="width:98%;">
+<div class="container">
+  <div id="pagina_percorso" class="row">
   <!--          left          left          left        left      -->
-  <div id ="left" style="margin-left:20px;width:250px;display:inline-block;">
-    <div id ="l-up" style="margin-bottom: 200px;">
-      <p>
-        <strong>Partenza:</strong>
-        <%= @percorso.partenza.capitalize %>
-      </p>
-      <p>
-        <strong>Data:</strong>
-        <%= @percorso.data.strftime("%d-%m-%Y") %>
-      </p>
-      <p>
-        <strong>Ora:</strong>
-        <%= @percorso.ora.hour  %>:<%= @percorso.ora.min  %>
-      </p>
-      <p>
-        <strong>Destinazione:</strong>
-        <%= @percorso.destinazione.capitalize %>
-      </p>
-      <p>
-        <strong>Durata:</strong>
-        <%= ((@percorso.durata)/60) %>
-        <strong> minuti</strong>
-      </p>
-    </div>
-    <div id ="l-dn">
-      <%= link_to 'Edit', edit_percorso_path(@percorso) %> |
-      <!--<%= link_to 'Back', percorsos_path %> |-->
-      <%= link_to 'Destroy', percorso_path(@percorso), method: :delete, data: { confirm: 'Are you sure?' } %>
-    </div>
-  </div>
-<!--        center       center     center      center        center           center  -->
-
-<ruby>
-  <div id ="map" style="display:inline-block;">
-    <iframe width="600" height="450" frameborder="1" style="border:1"
-    src=https://www.google.com/maps/embed/v1/directions?key=AIzaSyBvf51KQC6u-v6nVflhxbD0xbC1PSJEdpM&origin=<%= @percorso.partenza %>+italia&destination=<%= @percorso.destinazione %>+italia></iframe>
-  </div>
-</ruby>
-
-<!-- right      right      right      right      right      right      right      -->
-<div id = "right" style="display:inline-block; margin-left:50px; vertical-align:top">
-  <div id ="r-up creatore" >
-    <strong>Creatore</strong><br>
-    <li class="list-group-item">
-    <%= image_tag @fotoC, alt: @utente, class: 'img-circle' %>
-    <span class="badge" style="margin-top:15px;">
-    <%= @utente %>
-    </span>
-  </li>
-  </div>
-  <br>
-
-  <div id ="r-center partecipanti">
-    <strong>Partecipanti</strong><br>
-    <% @partecipanteInfo.each do |partecipante| %>
-    <% if(!current_user.nil?) %>
-    <li class="list-group-item">
-      <%= image_tag partecipante[0], alt: partecipante[1], class: 'img-circle' %>
-      <% end %>
-      <span class="badge" style="margin-top:15px;">
-      <%= partecipante[1] %>
-      </span>
-    </li>
-    <% end %>
-  </div>
-  <br>
-<!-- msg+reg      msg+reg      msg+reg      msg+reg      msg+reg      msg+reg      -->
-<div id="right dn" >
-  <% if @messages.empty? %>
-    <p class="lead text-center">
-        Non ci sono aggiornamenti sul percorso!
-    </p>
-  <% else %>
-    <p class="lead text-center">
-      Aggiornamenti ...
-    </p>
-      <% @messages.each do |message| %>
-        <div id="well">
-          <ul class="list-inline">
-            <li>
-              <%= image_tag message[1], alt: message[2], class: 'img-circle  img-responsive center-block' %><br>
-              <%= message[2] %>
-            </li>
-            <li>
-              <%= message[3] %><br>
-            </li>
-          </ul>
+    <div id ="left" class="col-sm-6 col-md-3">
+      <div class="col-xs-12">
+        <div id ="r-up creatore" class="row">
+          <strong>Creatore</strong><br>
+          <li class="list-group-item">
+            <%= image_tag @fotoC, alt: @utente, class: 'img-circle' %>
+            <span class="badge" style="margin-top:15px;">
+              <%= @utente %>
+            </span>
+          </li>
+        </div>
+        <br>
+        <fieldset>
+          <legend class="legend_show">Info:</legend>
+          <br>
+          <div class="row">
+            <div class="col-xs-4 col-md-5"><strong>Partenza:</strong></div>
+            <div class="col-xs-8 col-md-7"><%= @percorso.partenza.capitalize %></div>
+          </div>
+          <div class="row">
+            <div class="col-xs-4 col-md-5"><strong>Data:</strong></div>
+            <div class="col-xs-8 col-md-7"><%= @percorso.data.strftime("%d-%m-%Y") %></div>
+          </div>
+          <div class="row">
+            <div class="col-xs-4 col-md-5"><strong>Ora:</strong></div>
+            <div class="col-xs-8 col-md-7"><%= @percorso.ora.hour  %>:<%= @percorso.ora.min  %></div>
+          </div>
+          <div class="row">
+            <div class="col-xs-5 col-md-5"><strong>Destinazione:</strong></div>
+            <div class="col-xs-7 col-md-7"><%= @percorso.destinazione.capitalize %></div>
+          </div>
+          <div class="row">
+            <div class="col-xs-4 col-md-5"><strong>Durata:</strong></div>
+            <div class="col-xs-8 col-md-7"><%= ((@percorso.durata)/60) %><strong> minuti</strong></div>
+          </div>
+        </fieldset>
+        <br>
+        <% if current_user && current_user.uid == @percorso.utref %>
+        <div id ="l-dn" class="row lead text-center">
+          <div class="col-xs-4">
+            <%= link_to 'Aggiorna', edit_percorso_path(@percorso), class: 'link-form' %>
+          </div>
+          <div class="col-xs-2"></div>
+          <div class="col-xs-4">
+            <%= link_to 'Cancella', percorso_path(@percorso), method: :delete, data: { confirm: 'Sei sicuro?' }, class: 'link-form' %>
+          </div>
+        </div>
+        <div class="row">
+          <a class="btn btn-success text-center" id="link_photo">Aggiungi il link della foto</a>
+        </div>
+        <div class="row" style="display:none;" id="photo_container">
+          <%= render 'form_photo' %>
         </div>
         <% end %>
-    <% end %>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-9">
 
-<div id="part_canc" style="max-width:280px;margin:auto;">
-    <% if(!current_user.nil? && current_user.uid != @percorso.utref && !@isPartecipante )%>
-    <%=link_to "Partecipa" , partecipantis_path(:percorso => @percorso, :creator => @percorso.utref), method: :post, class: "btn btn-default" %>
-    <% end %>
+<!--        center       center     center      center        center           center  -->
+      <div id ="map" class="col-sm-12 col-md-8">
+        <ruby>
+            <iframe width="520" height="450" frameborder="1" style="border:1"
+            src=https://www.google.com/maps/embed/v1/directions?key=AIzaSyBvf51KQC6u-v6nVflhxbD0xbC1PSJEdpM&origin=<%= @percorso.partenza %>+italia&destination=<%= @percorso.destinazione %>+italia></iframe>
+        </ruby>
+      </div>
+<!-- right      right      right      right      right      right      right      -->
+      <div id="right" class="col-sm-12 col-md-4">
+        <div id ="center-partecipanti" class="row">
+          <%= render 'partecipanti' %>
+        </div>
+        <br>
+        <div id="part_canc" class="row">
+            <% if(!current_user.nil? && current_user.uid != @percorso.utref && !@isPartecipante )%>
+              <%=link_to "Partecipa" , percorso_partecipantis_path(@percorso, :percorso => @percorso, :creator => @percorso.utref),
+              method: :post, class: "btn btn-success center-block", id: 'partecipaButton', remote: true %>
+            <% end %>
 
-  <% if(@isPartecipante )%>
-  <%=link_to "Cancellami" , partecipanti_path(@partecipante, :percorso => @percorso), method: :delete, class: "btn btn-default" %>
-  <% end %>
-  <!--pulsante da configurare per messaggi-->
-  <input type="button" class="btn btn-info" value="Invia messaggio!"></input>
+          <% if(@isPartecipante )%>
+            <%=link_to "Cancellami" , percorso_partecipanti_path(@percorso, @partecipante, :percorso => @percorso),
+            method: :delete, class: "btn btn-danger center-block", id: 'cancellaButton', remote: true %>
+          <% end %>
+        </div><!--close right div-->
+        <div id="message_container" class="row">
+          <% if current_user && (@isPartecipante || current_user.uid == @percorso.utref) %>
+            <%= render 'messages' %>
+          <% end %>
+        </div>
+        <%= render 'message_button' %>
+      </div>
+    </div>
+  </div>
 </div>
-    </div><!--close div right dn-->
-  </div><!--close right div-->
-</div><!--close pagina_percorso -->

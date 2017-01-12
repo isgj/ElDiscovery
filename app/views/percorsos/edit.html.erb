@@ -1,6 +1,5 @@
-<h1>Editing Percorso</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @percorso %> |
-<%= link_to 'Back', percorsos_path %>
+<div class="container text-center form-div">
+  <h2 style="color: #FEFEFE; margin-bottom: 0.4em;">Aggiorna il percorso</h2>
+  <%= render 'form' %><br>
+  <%= link_to 'Torna indietro', @percorso, class: 'link-form' %>
+</div>

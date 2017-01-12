@@ -1,0 +1,15 @@
+$('#cancellaButton').fadeOut('slow', function() {
+  var a = $('<%= j link_to "Partecipa", percorso_partecipantis_path(@percorso, :percorso => @percorso.id, :creator => @percorso.utref), method: :post, class: "btn btn-success center-block", id: "partecipaButton", remote: true %>').hide();
+  $(this).replaceWith(a);
+  $('#partecipaButton').fadeIn('slow');
+});
+$('#yourPartecipa').slideUp('slow', function () {
+  $(this).remove();
+});
+$('#messages').fadeOut('fast', function () {
+  $(this).remove();
+});
+$('#message_button').children('#messageArea').slideUp();
+$('#message_button').slideUp('fast', function () {
+  $(this).children('a').remove();
+});

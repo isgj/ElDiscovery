@@ -1,0 +1,13 @@
+<%= form_for(@percorso, url: aggiorna_photo_percorso_url, remote: true) do |f| %>
+  <div class="row">
+    <%= text_field(:patch, :photo) %>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">
+      <a class="btn btn-success center-block" id="aggiorna_photo">Invia</a>
+    </div>
+    <div class="col-xs-6">
+      <a class="btn btn-danger center-block" id="cancella_photo">Cancella</a>
+    </div>
+  </div>
+<% end %>
