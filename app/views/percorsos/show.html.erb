@@ -50,8 +50,8 @@
             <%= link_to 'Cancella', percorso_path(@percorso), method: :delete, data: { confirm: 'Sei sicuro?' }, class: 'link-form' %>
           </div>
         </div>
-        <div class="row">
-          <a class="btn btn-success text-center" id="link_photo">Aggiungi il link della foto</a>
+        <div class="row" align="center">
+          <a class="btn btn-success text-center" id="link_photo" >Aggiungi il link della foto</a>
         </div>
         <div class="row" style="display:none;" id="photo_container">
           <%= render 'form_photo' %>
